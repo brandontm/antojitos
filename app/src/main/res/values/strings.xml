@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Antojitos</string>
+    <string name="goto_checkout">Go to checkout</string>
+    <string name="menu">Menu</string>
+</resources>
