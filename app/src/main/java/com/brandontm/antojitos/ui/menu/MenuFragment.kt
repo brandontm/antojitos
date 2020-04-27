@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.lifecycle.observe
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.brandontm.antojitos.R
 import com.brandontm.antojitos.di.viewModel.ViewModelProviderFactory
 import com.brandontm.reliq.base.BaseFragment
@@ -33,12 +34,17 @@ class MenuFragment : BaseFragment() {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
+        val adapter = ProductListAdapter()
+
+        // Show divider
+        rv_products.addItemDecoration(DividerItemDecoration(rv_products.context, DividerItemDecoration.VERTICAL))
+
+        rv_products.adapter = adapter
+
         viewModel.loadProducts()
 
         viewModel.products.observe(viewLifecycleOwner) {
-            val products = it
+            adapter.updateItems(it)
         }
-
-
     }
 }
