@@ -16,6 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
             app:menu="@menu/main_menu"
             style="@style/Widget.MaterialComponents.Toolbar.Surface" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -26,14 +27,16 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false"
         tools:listitem="@layout/layout_product_list_item">
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_add_contact"
+        android:id="@+id/fab_shopping_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="bottom|end"
         android:src="@drawable/ic_shopping_cart_24dp"
         android:contentDescription="@string/goto_checkout"
         android:layout_margin="16dp" />

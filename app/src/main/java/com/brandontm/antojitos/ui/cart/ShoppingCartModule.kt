@@ -1,4 +1,4 @@
-package com.brandontm.antojitos.ui.menu
+package com.brandontm.antojitos.ui.cart
 
 import androidx.lifecycle.ViewModel
 import com.brandontm.antojitos.di.scope.PerFragment
@@ -9,14 +9,14 @@ import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class MenuModule {
+abstract class ShoppingCartModule {
     @ContributesAndroidInjector
     @PerFragment
-    internal abstract fun contributesMenuFragment(): MenuFragment
+    internal abstract fun contributesShoppingCartFragment(): ShoppingCartFragment
 
     @Binds
     @IntoMap
-    @ViewModelKey(MenuViewModel::class)
+    @ViewModelKey(ShoppingCartViewModel::class)
     @PerFragment
-    internal abstract fun bindMenuViewModel(menuViewModel: MenuViewModel): ViewModel
+    internal abstract fun bindShoppingCartViewModel(shoppingCartViewModel: ShoppingCartViewModel): ViewModel
 }

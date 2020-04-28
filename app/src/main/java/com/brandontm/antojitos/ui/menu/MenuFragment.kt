@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.brandontm.antojitos.R
 import com.brandontm.antojitos.di.viewModel.ViewModelProviderFactory
@@ -34,6 +35,10 @@ class MenuFragment : BaseFragment() {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
+        fab_shopping_cart.setOnClickListener {
+            navigateToShoppingCart()
+        }
+
         val adapter = ProductListAdapter()
 
         // Show divider
@@ -44,7 +49,18 @@ class MenuFragment : BaseFragment() {
         viewModel.loadProducts()
 
         viewModel.products.observe(viewLifecycleOwner) {
-            adapter.updateItems(it)
+            val list = it.toMutableList()
+            list.addAll(it)
+            list.addAll(it)
+            list.addAll(it)
+            list.addAll(it)
+            list.addAll(it)
+            adapter.updateItems(list)
         }
+    }
+
+    private fun navigateToShoppingCart() {
+        val action = MenuFragmentDirections.actionMenuFragmentToShoppingCartFragment()
+        this.findNavController().navigate(action)
     }
 }

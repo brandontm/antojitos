@@ -3,4 +3,7 @@
     <string name="goto_checkout">Ir al checkout</string>
     <string name="menu">Menu</string>
     <string name="add_product">Agregar producto</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="your_order">Su orden</string>
+    <string name="logo_la_carpita">\"La carpita\" logo</string>
 </resources>
