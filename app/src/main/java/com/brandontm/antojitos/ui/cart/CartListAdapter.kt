@@ -23,6 +23,8 @@ import java.util.*
 import javax.inject.Inject
 
 class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
+    var onQuantityChanged: ((product: Product, quantity: Int) -> Unit)? = null
+
     private var items = mutableMapOf<Product, Int>()
     private val moneyFormat = NumberFormat.getCurrencyInstance().apply {
         this.currency = Currency.getInstance("MXN")
@@ -54,6 +56,13 @@ class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
             spn_product_quantity.setAdapter(quantitiesAdapter)
             spn_product_quantity.setText(items[product].toString(), false)
             lbl_product_accumulative_price.text = moneyFormat.format(product.price * items[product]!!)
+
+            spn_product_quantity.setOnItemClickListener { _, _, position, _ ->
+                onQuantityChanged?.let {
+                    val quantity: Int = spn_product_quantity.adapter.getItem(position) as Int
+                    it.invoke(product, quantity)
+                }
+            }
         }
     }
 

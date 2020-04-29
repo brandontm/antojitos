@@ -48,6 +48,9 @@ class ShoppingCartFragment : BaseFragment() {
     }
 
     private fun initRecyclerView() {
+        adapter.onQuantityChanged = { product, quantity ->
+            viewModel.addProductToCart(product, quantity)
+        }
         rv_cart_products.adapter = adapter
 
         // Show divider
