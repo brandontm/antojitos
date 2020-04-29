@@ -9,7 +9,7 @@ import javax.inject.Singleton
 class RepositoryModule {
     @Provides
     @Singleton
-    fun provideUserRepository(antojitosApi: AntojitosApi): ProductRepository {
+    fun provideProductRepository(antojitosApi: AntojitosApi): ProductRepository {
         return ProductRepository.getInstance(antojitosApi)
     }
 }

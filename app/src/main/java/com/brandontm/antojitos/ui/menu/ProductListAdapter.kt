@@ -12,6 +12,8 @@ import java.util.*
 
 class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ViewHolder>() {
     private var items = mutableListOf<Product>()
+    var onAddProductClicked:((product: Product) -> Unit)? = null
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,6 +30,9 @@ class ProductListAdapter : RecyclerView.Adapter<ProductListAdapter.ViewHolder>()
 
             lbl_product_name.text = product.name
             lbl_product_description.text = product.description
+            btn_add_product.setOnClickListener {
+                onAddProductClicked?.invoke(product)
+            }
 
             val numberFormat = NumberFormat.getCurrencyInstance()
             numberFormat.currency = Currency.getInstance("MXN")

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.brandontm.antojitos.data.entity.Product
 import com.brandontm.antojitos.data.repository.ProductRepository
-import com.brandontm.reliq.base.BaseViewModel
+import com.brandontm.antojitos.base.BaseViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject

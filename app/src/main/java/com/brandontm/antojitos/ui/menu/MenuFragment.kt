@@ -1,9 +1,11 @@
 package com.brandontm.antojitos.ui.menu
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -12,7 +14,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.brandontm.antojitos.R
 import com.brandontm.antojitos.di.viewModel.ViewModelProviderFactory
-import com.brandontm.reliq.base.BaseFragment
+import com.brandontm.antojitos.ui.cart.ShoppingCartViewModel
+import com.brandontm.antojitos.base.BaseFragment
 import kotlinx.android.synthetic.main.menu_fragment.*
 import javax.inject.Inject
 
@@ -20,7 +23,13 @@ class MenuFragment : BaseFragment() {
     @Inject
     lateinit var viewModelProvider: ViewModelProviderFactory
 
+    @Inject
+    lateinit var application: Application
+
     private lateinit var viewModel: MenuViewModel
+    private lateinit var shoppingCartViewModel: ShoppingCartViewModel
+
+    private val adapter = ProductListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +41,9 @@ class MenuFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this, viewModelProvider)
             .get(MenuViewModel::class.java)
+        shoppingCartViewModel = ViewModelProvider(this, viewModelProvider)
+            .get(ShoppingCartViewModel::class.java)
+
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
@@ -39,17 +51,17 @@ class MenuFragment : BaseFragment() {
             navigateToShoppingCart()
         }
 
-        val adapter = ProductListAdapter()
-
-        // Show divider
-        rv_products.addItemDecoration(DividerItemDecoration(rv_products.context, DividerItemDecoration.VERTICAL))
-
-        rv_products.adapter = adapter
+        initRecyclerView()
+        subscribeObservers()
 
         viewModel.loadProducts()
+    }
 
+    private fun subscribeObservers() {
         viewModel.products.observe(viewLifecycleOwner) {
             val list = it.toMutableList()
+
+            // TODO: Remove duplicating
             list.addAll(it)
             list.addAll(it)
             list.addAll(it)
@@ -57,6 +69,23 @@ class MenuFragment : BaseFragment() {
             list.addAll(it)
             adapter.updateItems(list)
         }
+    }
+
+    private fun initRecyclerView() {
+        adapter.onAddProductClicked = { product ->
+            shoppingCartViewModel.addProductToCart(product)
+            Toast
+                .makeText(
+                    application.applicationContext,
+                    getString(R.string.product_added),
+                    Toast.LENGTH_SHORT)
+                .show()
+        }
+        rv_products.adapter = adapter
+
+        // Show divider
+        rv_products.addItemDecoration(DividerItemDecoration(rv_products.context, DividerItemDecoration.VERTICAL))
+
     }
 
     private fun navigateToShoppingCart() {

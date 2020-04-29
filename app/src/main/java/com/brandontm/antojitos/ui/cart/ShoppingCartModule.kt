@@ -1,6 +1,7 @@
 package com.brandontm.antojitos.ui.cart
 
 import androidx.lifecycle.ViewModel
+import com.brandontm.antojitos.di.scope.PerActivity
 import com.brandontm.antojitos.di.scope.PerFragment
 import com.brandontm.antojitos.di.viewModel.ViewModelKey
 import dagger.Binds
@@ -17,6 +18,6 @@ abstract class ShoppingCartModule {
     @Binds
     @IntoMap
     @ViewModelKey(ShoppingCartViewModel::class)
-    @PerFragment
+    @PerActivity
     internal abstract fun bindShoppingCartViewModel(shoppingCartViewModel: ShoppingCartViewModel): ViewModel
 }

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.brandontm.reliq.base
+package com.brandontm.antojitos.base
 
 import dagger.android.support.DaggerFragment
 
