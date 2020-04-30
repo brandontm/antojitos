@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -16,6 +17,7 @@ import com.brandontm.antojitos.R
 import com.brandontm.antojitos.di.viewModel.ViewModelProviderFactory
 import com.brandontm.antojitos.ui.cart.ShoppingCartViewModel
 import com.brandontm.antojitos.base.BaseFragment
+import com.brandontm.antojitos.ui.MainActivity
 import kotlinx.android.synthetic.main.menu_fragment.*
 import javax.inject.Inject
 
@@ -27,7 +29,9 @@ class MenuFragment : BaseFragment() {
     lateinit var application: Application
 
     private lateinit var viewModel: MenuViewModel
-    private lateinit var shoppingCartViewModel: ShoppingCartViewModel
+    private val shoppingCartViewModel by viewModels<ShoppingCartViewModel>({activity as MainActivity}) {
+        viewModelProvider
+    }
 
     private val adapter = ProductListAdapter()
 
@@ -41,8 +45,6 @@ class MenuFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this, viewModelProvider)
             .get(MenuViewModel::class.java)
-        shoppingCartViewModel = ViewModelProvider(this, viewModelProvider)
-            .get(ShoppingCartViewModel::class.java)
 
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
@@ -73,7 +75,7 @@ class MenuFragment : BaseFragment() {
 
     private fun initRecyclerView() {
         adapter.onAddProductClicked = { product ->
-            shoppingCartViewModel.addProductToCart(product)
+            shoppingCartViewModel.addProduct(product)
             Toast
                 .makeText(
                     application.applicationContext,

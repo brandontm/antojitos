@@ -1,26 +1,15 @@
 package com.brandontm.antojitos.ui.cart
 
-import android.app.Application
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.brandontm.antojitos.AntojitosApp
 import com.brandontm.antojitos.R
 import com.brandontm.antojitos.data.entity.Product
-import com.brandontm.antojitos.di.application.ApplicationComponent
-import com.brandontm.antojitos.di.application.DaggerApplicationComponent
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasAndroidInjector
-import dagger.android.support.AndroidSupportInjection
 import kotlinx.android.synthetic.main.layout_cart_list_item.view.*
 import java.text.NumberFormat
 import java.util.*
-import javax.inject.Inject
 
 class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
     var onQuantityChanged: ((product: Product, quantity: Int) -> Unit)? = null
@@ -48,7 +37,7 @@ class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
                 holder.itemView.resources.getIntArray(R.array.quantities).toList()
             )
 
-        val product = items.keys.toTypedArray()[position]
+        val product = getItemByPosition(position)!!
 
         with(holder.itemView) {
             lbl_product_name.text = product.name
@@ -64,6 +53,20 @@ class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
                 }
             }
         }
+    }
+
+    override fun getItemId(position: Int): Long {
+        return items.keys.toTypedArray()[position].id.toLong()
+    }
+
+    fun getItemById(id: Int): Product? {
+        return items.keys.firstOrNull {
+            it.id == id
+        }
+    }
+
+    fun getItemByPosition(position: Int): Product? {
+        return items.keys.toTypedArray()[position]
     }
 
     fun updateItems(items: Map<Product, Int>) {
