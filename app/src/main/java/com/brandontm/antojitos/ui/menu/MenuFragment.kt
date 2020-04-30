@@ -50,7 +50,14 @@ class MenuFragment : BaseFragment() {
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
         fab_shopping_cart.setOnClickListener {
-            navigateToShoppingCart()
+            if(shoppingCartViewModel.cart.value?.isNotEmpty() == true) {
+                navigateToShoppingCart()
+            } else {
+                Toast.makeText(
+                    application.applicationContext,
+                    getString(R.string.no_product_in_cart),
+                    Toast.LENGTH_LONG).show()
+            }
         }
 
         initRecyclerView()

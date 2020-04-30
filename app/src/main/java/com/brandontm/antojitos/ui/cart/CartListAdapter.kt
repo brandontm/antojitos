@@ -30,11 +30,15 @@ class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val context = holder.itemView.context
+        val maxQuantity = context.resources.getInteger(R.integer.max_product_quantity)
+
+        val quantities = IntRange(1, maxQuantity)
         val quantitiesAdapter =
             ArrayAdapter<Int>(
-                holder.itemView.context,
+                context,
                 android.R.layout.simple_dropdown_item_1line,
-                holder.itemView.resources.getIntArray(R.array.quantities).toList()
+                quantities.toList()
             )
 
         val product = getItemByPosition(position)!!

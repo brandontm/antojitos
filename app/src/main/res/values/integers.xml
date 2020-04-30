@@ -7,4 +7,6 @@
         <item>4</item>
         <item>5</item>
     </integer-array>
+
+    <integer name="max_product_quantity">10</integer>
 </resources>

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -47,6 +48,9 @@ class ShoppingCartFragment : BaseFragment() {
         showCartProducts()
 
         viewModel.cart.observe(viewLifecycleOwner) {
+            if(it.isEmpty())
+                findNavController().navigateUp()
+
             adapter.updateItems(it)
 
             var total = 0
