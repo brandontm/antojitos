@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -19,6 +18,9 @@ import com.brandontm.antojitos.base.BaseFragment
 import com.brandontm.antojitos.ui.MainActivity
 import kotlinx.android.synthetic.main.menu_fragment.toolbar
 import kotlinx.android.synthetic.main.shopping_cart_fragment.*
+import okhttp3.internal.toImmutableMap
+import java.text.NumberFormat
+import java.util.*
 import javax.inject.Inject
 
 class ShoppingCartFragment : BaseFragment() {
@@ -42,14 +44,24 @@ class ShoppingCartFragment : BaseFragment() {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
-        initRecyclerView()
+        showCartProducts()
 
         viewModel.cart.observe(viewLifecycleOwner) {
             adapter.updateItems(it)
+
+            var total = 0
+            for((key, value) in it)
+                total += key.price * value
+
+            val moneyFormat = NumberFormat.getCurrencyInstance().apply {
+                this.currency = Currency.getInstance("MXN")
+                this.maximumFractionDigits = 0
+            }
+            lbl_total.text = moneyFormat.format(total)
         }
     }
 
-    private fun initRecyclerView() {
+    private fun showCartProducts() {
         rv_cart_products.adapter = adapter
 
         // Show divider

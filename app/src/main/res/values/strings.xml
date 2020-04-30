@@ -8,4 +8,5 @@
     <string name="logo_la_carpita">\"La carpita\" logo</string>
     <string name="product_added">Product added</string>
     <string name="quantity">Cantidad</string>
+    <string name="order_total">Total</string>
 </resources>
