@@ -10,4 +10,10 @@
     <string name="quantity">Cantidad</string>
     <string name="order_total">Total</string>
     <string name="no_product_in_cart">No se han agregado productos al carrito</string>
+    <string name="over_max_product_quantity">No se puede agregar más de %1$s</string>
+    
+    <plurals name="number_of_products">
+        <item quantity="one">%d producto</item>
+        <item quantity="other">%d productos</item>
+    </plurals>
 </resources>

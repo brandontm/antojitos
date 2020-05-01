@@ -3,6 +3,7 @@ package com.brandontm.antojitos.di.network
 import com.brandontm.antojitos.BuildConfig
 import com.brandontm.antojitos.data.network.AntojitosApi
 import com.brandontm.antojitos.ext.callFactory
+import com.brandontm.antojitos.Config
 import com.squareup.moshi.Moshi
 import dagger.Lazy
 import dagger.Module
@@ -37,7 +38,7 @@ class AntojitosApiModule {
     @Singleton
     fun provideRetrofit(client: Lazy<OkHttpClient>): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://Antojitos-env.eba-ya72hggp.us-east-2.elasticbeanstalk.com/")
+            .baseUrl(Config.URL_ANTOJITOS_API)
             .addConverterFactory(MoshiConverterFactory.create())
             .callFactory { client.get().newCall(it) }
             .build()

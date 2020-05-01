@@ -13,12 +13,14 @@ import androidx.navigation.ui.NavigationUI
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.brandontm.antojitos.Config
 import com.brandontm.antojitos.R
 import com.brandontm.antojitos.di.viewModel.ViewModelProviderFactory
 import com.brandontm.antojitos.ui.cart.ShoppingCartViewModel
 import com.brandontm.antojitos.base.BaseFragment
 import com.brandontm.antojitos.ui.MainActivity
 import kotlinx.android.synthetic.main.menu_fragment.*
+import timber.log.Timber
 import javax.inject.Inject
 
 class MenuFragment : BaseFragment() {
@@ -28,8 +30,7 @@ class MenuFragment : BaseFragment() {
     @Inject
     lateinit var application: Application
 
-    private lateinit var viewModel: MenuViewModel
-    private val shoppingCartViewModel by viewModels<ShoppingCartViewModel>({activity as MainActivity}) {
+    private val viewModel by viewModels<MenuViewModel> {
         viewModelProvider
     }
 
@@ -43,20 +44,18 @@ class MenuFragment : BaseFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = ViewModelProvider(this, viewModelProvider)
-            .get(MenuViewModel::class.java)
-
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
         fab_shopping_cart.setOnClickListener {
-            if(shoppingCartViewModel.cart.value?.isNotEmpty() == true) {
+            if (viewModel.cart.value?.isNotEmpty() == true) {
                 navigateToShoppingCart()
             } else {
                 Toast.makeText(
                     application.applicationContext,
                     getString(R.string.no_product_in_cart),
-                    Toast.LENGTH_LONG).show()
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -78,22 +77,52 @@ class MenuFragment : BaseFragment() {
             list.addAll(it)
             adapter.updateItems(list)
         }
+
+        viewModel.saveStatus.observe(viewLifecycleOwner) { savedSuccessfully ->
+            if (savedSuccessfully) {
+                Toast
+                    .makeText(
+                        application.applicationContext,
+                        getString(R.string.product_added),
+                        Toast.LENGTH_SHORT
+                    )
+                    .show()
+            } else {
+                val maxProductQuantity = Config.MAX_PRODUCT_QUANTITY
+                val productsQuantityString = resources.getQuantityString(
+                    R.plurals.number_of_products,
+                    maxProductQuantity,
+                    maxProductQuantity
+                )
+
+                val overMaxProducts = resources.getString(
+                    R.string.over_max_product_quantity,
+                    productsQuantityString
+                )
+                Toast
+                    .makeText(
+                        application.applicationContext,
+                        overMaxProducts,
+                        Toast.LENGTH_SHORT
+                    )
+                    .show()
+            }
+        }
     }
 
     private fun initRecyclerView() {
         adapter.onAddProductClicked = { product ->
-            shoppingCartViewModel.addProduct(product)
-            Toast
-                .makeText(
-                    application.applicationContext,
-                    getString(R.string.product_added),
-                    Toast.LENGTH_SHORT)
-                .show()
+            viewModel.addProduct(product)
         }
         rv_products.adapter = adapter
 
         // Show divider
-        rv_products.addItemDecoration(DividerItemDecoration(rv_products.context, DividerItemDecoration.VERTICAL))
+        rv_products.addItemDecoration(
+            DividerItemDecoration(
+                rv_products.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
 
     }
 

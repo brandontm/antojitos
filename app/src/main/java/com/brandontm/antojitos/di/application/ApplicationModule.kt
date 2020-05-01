@@ -2,6 +2,7 @@ package com.brandontm.antojitos.di.application
 
 import android.app.Application
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import com.brandontm.antojitos.di.qualifiers.ForApplication
 import dagger.Module

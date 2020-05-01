@@ -3,9 +3,10 @@ package com.brandontm.antojitos.data.repository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.brandontm.antojitos.data.entity.Product
-import com.brandontm.antojitos.data.network.AntojitosApi
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CartRepository @Inject constructor() {
     private val cart: MutableLiveData<Map<Product, Int>> = MutableLiveData(mapOf())
 
@@ -25,16 +26,5 @@ class CartRepository @Inject constructor() {
         items.remove(product)
 
         cart.value = items
-    }
-
-    companion object {
-        private var instance: ProductRepository? = null
-
-        fun getInstance(antojitosApi: AntojitosApi): ProductRepository {
-            if (instance == null) {
-                instance = ProductRepository(antojitosApi)
-            }
-            return instance!!
-        }
     }
 }

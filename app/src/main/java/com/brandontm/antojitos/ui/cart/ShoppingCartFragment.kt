@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.NavHostFragment
@@ -28,7 +29,7 @@ class ShoppingCartFragment : BaseFragment() {
     @Inject
     lateinit var viewModelProvider: ViewModelProviderFactory
 
-    private val viewModel by viewModels<ShoppingCartViewModel>({activity as MainActivity }) {
+    private val viewModel by viewModels<ShoppingCartViewModel> {
         viewModelProvider
     }
 
@@ -47,14 +48,15 @@ class ShoppingCartFragment : BaseFragment() {
 
         showCartProducts()
 
-        viewModel.cart.observe(viewLifecycleOwner) {
-            if(it.isEmpty())
+        viewModel.cart.observe(viewLifecycleOwner) { cart ->
+            if(cart.isEmpty()) {
                 findNavController().navigateUp()
+            }
 
-            adapter.updateItems(it)
+            adapter.updateItems(cart)
 
             var total = 0
-            for((key, value) in it)
+            for((key, value) in cart)
                 total += key.price * value
 
             val moneyFormat = NumberFormat.getCurrencyInstance().apply {

@@ -18,6 +18,6 @@ abstract class ShoppingCartModule {
     @Binds
     @IntoMap
     @ViewModelKey(ShoppingCartViewModel::class)
-    @PerActivity
+    @PerFragment
     internal abstract fun bindShoppingCartViewModel(shoppingCartViewModel: ShoppingCartViewModel): ViewModel
 }
