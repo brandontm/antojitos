@@ -13,6 +13,15 @@
     <string name="over_max_product_quantity">No se puede agregar más de %1$s</string>
     <string name="place_order">Ordenar</string>
     <string name="checkout">Checkout</string>
+    <string name="shipping_info">Datos de envío</string>
+    <string name="input_name">Nombre completo</string>
+    <string name="input_address">Dirección completa</string>
+    <string name="input_phone_number">Número de celular</string>
+    <string name="order_placed">Se ha realizado la orden</string>
+    <string name="place_order_error">No se pudo realizar la orden por un error interno</string>
+    <string name="error_minimum_length_name">Debe tener al menos 6 caracteres</string>
+    <string name="error_minimum_length_address">Debe tener al menos 16 caracteres</string>
+    <string name="error_minimum_length_phone">Debe tener al menos 8 caracteres</string>
 
     <plurals name="number_of_products">
         <item quantity="one">%d producto</item>
