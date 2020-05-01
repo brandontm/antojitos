@@ -46,6 +46,10 @@ class ShoppingCartFragment : BaseFragment() {
         val navHostFragment = NavHostFragment.findNavController(this)
         NavigationUI.setupWithNavController(toolbar, navHostFragment)
 
+        btn_goto_checkout.setOnClickListener {
+            navigateToCheckout()
+        }
+
         showCartProducts()
 
         viewModel.cart.observe(viewLifecycleOwner) { cart ->
@@ -83,5 +87,10 @@ class ShoppingCartFragment : BaseFragment() {
         adapter.onQuantityChanged = { product, quantity ->
             viewModel.addProduct(product, quantity)
         }
+    }
+
+    private fun navigateToCheckout() {
+        val action = ShoppingCartFragmentDirections.actionShoppingCartFragmentToCheckoutFragment()
+        this.findNavController().navigate(action)
     }
 }

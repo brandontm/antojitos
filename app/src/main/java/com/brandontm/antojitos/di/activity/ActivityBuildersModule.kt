@@ -20,6 +20,7 @@ package com.brandontm.antojitos.di.activity
 import com.brandontm.antojitos.di.scope.PerActivity
 import com.brandontm.antojitos.ui.MainActivity
 import com.brandontm.antojitos.ui.cart.ShoppingCartModule
+import com.brandontm.antojitos.ui.checkout.CheckoutModule
 import com.brandontm.antojitos.ui.menu.MenuModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -30,7 +31,8 @@ abstract class ActivityBuildersModule {
     @PerActivity
     @ContributesAndroidInjector(modules = [
         MenuModule::class,
-        ShoppingCartModule::class
+        ShoppingCartModule::class,
+        CheckoutModule::class
     ])
     abstract fun contributeMainActivity(): MainActivity
 }

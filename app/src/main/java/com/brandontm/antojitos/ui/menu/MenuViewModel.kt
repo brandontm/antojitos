@@ -22,9 +22,6 @@ class MenuViewModel @Inject constructor(private val productRepository: ProductRe
 
     val cart: LiveData<Map<Product, Int>> get() = cartRepository.getCart()
 
-    override fun onCleared() {
-        super.onCleared()
-    }
     fun loadProducts() {
         viewModelScope.launch {
             productRepository.getProducts()

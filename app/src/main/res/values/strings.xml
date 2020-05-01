@@ -3,7 +3,7 @@
     <string name="goto_checkout">Ir al checkout</string>
     <string name="menu">Menu</string>
     <string name="add_product">Agregar producto</string>
-    <string name="shopping_cart">Shopping Cart</string>
+    <string name="shopping_cart">Carrito</string>
     <string name="your_order">Su orden</string>
     <string name="logo_la_carpita">\"La carpita\" logo</string>
     <string name="product_added">Product added</string>
@@ -11,7 +11,9 @@
     <string name="order_total">Total</string>
     <string name="no_product_in_cart">No se han agregado productos al carrito</string>
     <string name="over_max_product_quantity">No se puede agregar más de %1$s</string>
-    
+    <string name="place_order">Ordenar</string>
+    <string name="checkout">Checkout</string>
+
     <plurals name="number_of_products">
         <item quantity="one">%d producto</item>
         <item quantity="other">%d productos</item>
